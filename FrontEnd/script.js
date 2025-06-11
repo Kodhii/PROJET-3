@@ -6,6 +6,14 @@ const Works = await reponseWorks.json();
 const reponseCategories = await fetch ("http://localhost:5678/api/categories");
 const Category = await reponseCategories.json();
 
+// Ajout d'une Categorie "Tous" dans le tableau
+
+const NewCategory = {
+    "id": 0,
+    "name": "Tous"
+  };
+Category.unshift(NewCategory);
+
 // fonction Générer les Travaux
 
 function genererTravaux(Works){
@@ -45,16 +53,6 @@ genererTravaux(Works);
 
 const DivBtn = document.querySelector(".BtnFilter");
 
-// Création boutons tous
-
-const BtnTous = document.createElement("button");
-BtnTous.innerText = "Tous";
-// Déclaration de l'ID "all"
-BtnTous.setAttribute("category-id", "all");
-
-BtnTous.classList.add("BtnClass");
-DivBtn.appendChild(BtnTous);
-
 // Fonction Generer boutons (boucle for)
 
 function genererBtn(Category){
@@ -81,12 +79,12 @@ function genererBtn(Category){
 genererBtn(Category);
 
 
+
 //Fonction boutons filtres
 
 // Ecoute du click sur un boutons quelconque 
 DivBtn.addEventListener("click", function (event) {
-
-    // Récupération de l'ID du boutons cliqué (1, 2, 3 ou "all")
+    // Récupération de l'ID du boutons cliqué (0, 1, 2, 3)
     const categoryid = event.target.getAttribute("category-id");
     console.log(categoryid);
     const AllImg = document.querySelectorAll(".gallery figure");
@@ -95,14 +93,14 @@ DivBtn.addEventListener("click", function (event) {
         const ImgCategory = figure.getAttribute("categoryImgId");
         console.log(ImgCategory);
 
-        // Si ID = "all" = affiche toutes les figure || ID = 1 ,2 ou 3 = Affiche les figures correspondante à l'ID 
+        // Si ID = "0" = affiche toutes les figures || ID = 1 ,2 ou 3 = Affiche les figures correspondante à l'ID 
 
-        if (categoryid === "all" || categoryid === ImgCategory) {
+        if (categoryid == 0 || categoryid === ImgCategory) {
             figure.style.display = "block"; 
         } else { 
             // Cache les figures dont l'ID n'est pas lu
             figure.style.display = "none";
         }  
-    })
+    });
     
-})
+});

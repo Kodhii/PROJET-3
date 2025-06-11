@@ -132,6 +132,30 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.BtnFilter {
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.BtnFilter button {
+	width: auto;
+	min-width: 100px;
+	height: 37px;
+	border-radius: 60px;
+	border-color: #1D6154;
+	color: #1D6154;
+	font-family: "Syne";
+	font-size: 16px;
+	font-weight: 700;
+}
+.BtnFilter button:focus {
+	background-color: #1D6154;
+	color: #FFFFFF;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
