@@ -18,6 +18,8 @@ FormulaireLogin.addEventListener("submit", function (event) {
 
     // ENVOI A L'API
 
+    
+
     fetch('http://localhost:5678/api/users/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -36,7 +38,18 @@ FormulaireLogin.addEventListener("submit", function (event) {
 
       } 
       // Si le statut de la réponse est OK, Redirection vers la page d'accueil
+      
+      const ResponseJson = response.json();
+      console.log(ResponseJson);
 
+      return ResponseJson;
+      
+    })
+    .then((data) => {
+      console.log(data);
+      window.localStorage.setItem("ConnectedToken", data.token);
+      const TokenKey = window.localStorage.getItem("ConnectedToken");
+      console.log(TokenKey);
       window.location.href = "./index.html";
     })
 });

@@ -1,3 +1,40 @@
+// Vérification Utilisateur Connecté ou non
+const TokenKey = window.localStorage.getItem("ConnectedToken");
+console.log(TokenKey);
+
+// Si le Token de connection est null => apparence de la page "déconnectée"
+
+if (TokenKey === null){
+    const EditionDisplay = document.querySelector(".Edition");
+    EditionDisplay.style.display = "none";
+
+    const LogoutBtn = document.querySelector("#Logout");
+    LogoutBtn.style.display = "none";
+
+    const LoginBtn = document.querySelector("#Login");
+    LoginBtn.style.display = "block";
+
+    const Modif = document.querySelector(".Modif");
+    Modif.style.display = "none";
+    
+}
+
+// Si le token n'est pas null => Apparence de la page "connectée"
+
+else {
+    const BtnHide = document.querySelector(".BtnFilter");
+    BtnHide.style.display = "none";
+};
+
+// Écoute du clique sur le boutons "logout" => suppression du token
+
+const LogoutBtn = document.querySelector("#Logout");
+LogoutBtn.addEventListener("click", function () {
+    window.localStorage.removeItem("ConnectedToken")
+    window.location.href = "./index.html";
+});
+
+
 // Récupération des éléments de l'API
 
 const reponseWorks = await fetch("http://localhost:5678/api/works");
@@ -5,9 +42,6 @@ const Works = await reponseWorks.json();
 
 const reponseCategories = await fetch ("http://localhost:5678/api/categories");
 const Category = await reponseCategories.json();
-
-const TokenKey = window.localStorage.getItem("ConnectedToken");
-console.log(TokenKey);
 
 // Ajout d'une Categorie "Tous" dans le tableau
 
