@@ -49,13 +49,6 @@ function genererTravaux(Works){
 
 genererTravaux(Works);
 
-
-// Création des boutons
-
-// Récupération Class "BtnFilter accueillant les boutons"
-
-
-
 // Fonction Generer boutons (boucle for)
 
 function genererBtn(Category){
@@ -81,7 +74,11 @@ function genererBtn(Category){
 
 genererBtn(Category);
 
+// Récupération des boutons
+
 const DivBtn = document.querySelectorAll(".BtnFilter button");
+
+//boucle d'écoute du clique sur les boutons
 
 for (let i = 0; i < DivBtn.length; i++) {
 DivBtn[i].addEventListener("click", function (event) {
@@ -94,7 +91,7 @@ DivBtn[i].addEventListener("click", function (event) {
         const ImgCategory = figure.getAttribute("categoryImgId");
     
 
-        // Si ID = "0" = affiche toutes les figures || ID = 1 ,2 ou 3 = Affiche les figures correspondante à l'ID 
+        // Si ID = "0" => affiche toutes les figures || ID = 1 ,2 ou 3 => Affiche les figures correspondante à l'ID 
 
         if (categoryid == 0 || categoryid === ImgCategory) {
             figure.style.display = "block"; 
