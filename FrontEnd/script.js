@@ -6,6 +6,9 @@ const Works = await reponseWorks.json();
 const reponseCategories = await fetch ("http://localhost:5678/api/categories");
 const Category = await reponseCategories.json();
 
+const TokenKey = window.localStorage.getItem("ConnectedToken");
+console.log(TokenKey);
+
 // Ajout d'une Categorie "Tous" dans le tableau
 
 const NewCategory = {
@@ -51,7 +54,7 @@ genererTravaux(Works);
 
 // Récupération Class "BtnFilter accueillant les boutons"
 
-const DivBtn = document.querySelector(".BtnFilter");
+
 
 // Fonction Generer boutons (boucle for)
 
@@ -71,19 +74,17 @@ function genererBtn(Category){
     
 
         DivBtn.appendChild(Btn);
-        console.log(article);
+        console.log(Btn);
     }
 
 }
 
 genererBtn(Category);
 
+const DivBtn = document.querySelectorAll(".BtnFilter button");
 
-
-//Fonction boutons filtres
-
-// Ecoute du click sur un boutons quelconque 
-DivBtn.addEventListener("click", function (event) {
+for (let i = 0; i < DivBtn.length; i++) {
+DivBtn[i].addEventListener("click", function (event) {
     // Récupération de l'ID du boutons cliqué (0, 1, 2, 3)
     const categoryid = event.target.getAttribute("category-id");
     console.log(categoryid);
@@ -91,7 +92,7 @@ DivBtn.addEventListener("click", function (event) {
     // Récupération de l'ID des figures
     AllImg.forEach (figure => {
         const ImgCategory = figure.getAttribute("categoryImgId");
-        console.log(ImgCategory);
+    
 
         // Si ID = "0" = affiche toutes les figures || ID = 1 ,2 ou 3 = Affiche les figures correspondante à l'ID 
 
@@ -104,3 +105,4 @@ DivBtn.addEventListener("click", function (event) {
     });
     
 });
+}
