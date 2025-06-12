@@ -24,9 +24,9 @@ if (TokenKey === null){
 else {
     const BtnHide = document.querySelector(".BtnFilter");
     BtnHide.style.display = "none";
-};
+}
 
-// Écoute du clique sur le boutons "logout" => suppression du token
+// Écoute du click sur le bouton "logout" => suppression du token
 
 const LogoutBtn = document.querySelector("#Logout");
 LogoutBtn.addEventListener("click", function () {
@@ -112,11 +112,11 @@ genererBtn(Category);
 
 const DivBtn = document.querySelectorAll(".BtnFilter button");
 
-//boucle d'écoute du clique sur les boutons
+//boucle d'écoute du click sur les boutons
 
 for (let i = 0; i < DivBtn.length; i++) {
 DivBtn[i].addEventListener("click", function (event) {
-    // Récupération de l'ID du boutons cliqué (0, 1, 2, 3)
+    // Récupération de l'ID du bouton cliqué (0, 1, 2, 3)
     const categoryid = event.target.getAttribute("category-id");
     console.log(categoryid);
     const AllImg = document.querySelectorAll(".gallery figure");
@@ -125,7 +125,7 @@ DivBtn[i].addEventListener("click", function (event) {
         const ImgCategory = figure.getAttribute("categoryImgId");
     
 
-        // Si ID = "0" => affiche toutes les figures || ID = 1 ,2 ou 3 => Affiche les figures correspondante à l'ID 
+        // Si ID = "0" => affiche toutes les figures || ID = 1, 2 ou 3 => Affiche les figures correspondante à l'ID 
 
         if (categoryid == 0 || categoryid === ImgCategory) {
             figure.style.display = "block"; 
