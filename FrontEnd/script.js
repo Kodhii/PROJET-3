@@ -52,11 +52,11 @@ const NewCategory = {
 Category.unshift(NewCategory);
 
 
-// fonction Générer les Travaux
+// Appel fonction Générer les Travaux
 
 genererTravaux(Works);
 
-// Fonction Generer boutons
+// Appel fonction Generer boutons
 
 genererBtn(Category);
 
@@ -65,13 +65,12 @@ genererBtn(Category);
 
 const DivBtn = document.querySelectorAll(".BtnFilter button");
 
-//boucle d'écoute du click sur les boutons
+// Boucle d'écoute du click sur les boutons
 
 for (let i = 0; i < DivBtn.length; i++) {
 DivBtn[i].addEventListener("click", function (event) {
     // Récupération de l'ID du bouton cliqué (0, 1, 2, 3)
     const categoryid = event.target.getAttribute("category-id");
-    console.log(categoryid);
     const AllImg = document.querySelectorAll(".gallery figure");
     // Récupération de l'ID des figures
     AllImg.forEach (figure => {
@@ -110,34 +109,31 @@ const openModal = function (e) {
     modalDisplay.querySelector(".closeModal").addEventListener("click", closeModal);
 
 
-    console.log(modalDisplay);
 
-
-    // Appel de la function genererTravauxModal
+    // Appel de la fonction genererTravauxModal
     genererTravauxModal(Works);
 
 
 
     // Envoie d'une requête de suppression du travail
     const DeleteIcon = document.querySelectorAll(".IconDelete");
-    console.log(DeleteIcon);
     for (let i=0; i < DeleteIcon.length; i++) {
         DeleteIcon[i].addEventListener("click", function (e) {
             e.preventDefault();
             const RecupId = e.target.getAttribute("workid");
-            console.log(RecupId);
 
             const RecupToken = window.localStorage.getItem("ConnectedToken");
-
-            console.log(RecupToken);
             
             fetch('http://localhost:5678/api/works/'+RecupId, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${RecupToken}`,
                 
-            }
-        
+            }        
+            })
+            .then((data) => {
+            alert("Élément Supprimé avec succès");
+            window.location.href = "./index.html";
             })
 
         })
@@ -156,7 +152,7 @@ const closeModal = function (e) {
     document.querySelector(".IconeWorks").innerHTML = "";
 }
 
-// Function empechant la fermeture de la modale en cliquant à l'interieur
+// Fonction empechant la fermeture de la modale en cliquant à l'interieur
 
 const modalWrappers = modal.querySelectorAll(".jsModalStop"); 
 modalWrappers.forEach(
@@ -195,58 +191,65 @@ const openModal2 = document.querySelector("#AddWorks");
     
     document.getElementById("img").addEventListener('change', getImg);
     
+// Appel de la fonction d'ajout
+
+  const formAdd = document.getElementById("formAdd");
+  formAdd.addEventListener("submit", sendForm);
 
 
+   })
 
-    function sendForm(e) {
+
+// Fonction ajout des travaux
+
+function sendForm(e) {
     e.preventDefault();
-  
-    const form = e.target;
-    console.log(form);
-    const formData = new FormData(form);
+
+    // Recupération des valeurs du formulaire
+
+    const img = document.getElementById("img").files[0];
+    const title = document.getElementById("title").value;
+    const cat = document.getElementById("Category");
+
+    const categoryId = cat.options[cat.selectedIndex].value;
+    
+    const formData = new FormData;
+    formData.append("image", img);
+    formData.append("title", title);
+    formData.append("category", categoryId);
+
+    
+    
+    // Envoie à l'API
     
 
     fetch('http://localhost:5678/api/works', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TokenKey}`,
-            'Content-Type': 'multipart/form-data'
         },  
         body: formData,
 
         })
+
+        // Traitement de la réponse
+
+        .then((response) => {
+            if (response.ok) {
+            alert("Nouveau fichier envoyé avec succés : " + title);
+            return response.json();
+        } else {
+            console.error("Erreur:", response.status);
+        }
+        })
+        .then((data) => {
+        console.log("Element ajouté : ", data);
+        window.location.href = "./index.html";
+        })
   }
-  
-  const formAdd = document.getElementById("formAdd");
-  formAdd.addEventListener("submit", sendForm);
 
 
-
-
-
-
-
-    /*const form = document.forms.namedItem("formAdd");
-    form.addEventListener("submit",(event) => {
-
-        event.preventDefault();
-
-        const formData = new FormData(form);
-        formData.append("CustomField", "Des données supplémentaires");
-
-
-        fetch('http://localhost:5678/api/works', {
-        method: 'POST',
-        headers: {'Content-Type': 'multipart/form-data'},
-        body: formData,
-        
-        });
-
-    })*/
-
-
-   })
-
+// Affichage de l'image lors de la séléction d'ajout travaux
 
 const Img = document.querySelector("#imgFile")
 
@@ -265,6 +268,7 @@ function getImg(e){
 
    }
 
+// Flèche de retour modale
 
 const retourModal = document.querySelector("#retour");
    retourModal.addEventListener("click", function (e){
@@ -295,22 +299,3 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
-
-
-function genererCat(Category){
-    for (let i = 1; i < Category.length; i++){
-        
-        const article = Category[i];
-
-        const ParentCat = document.querySelector("#Category");
-
-        const option = document.createElement("option");
-        option.value = article.id;
-        option.innerText = article.name;
-
-        console.log(option);
-
-        ParentCat.appendChild(option);
-    }
-    
-}

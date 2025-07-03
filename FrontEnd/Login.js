@@ -1,9 +1,9 @@
 
-//RECUPERATION DU FORMULAIRE
+// Recupération du formulaire
 
 const FormulaireLogin = document.querySelector(".login");
 
-// EVENTLISTENER DE L'EVENT SUBMIT
+// EventListener de l'event submit
 FormulaireLogin.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -14,9 +14,8 @@ FormulaireLogin.addEventListener("submit", function (event) {
         password: event.target.querySelector("[name=mdp]").value,
     };
     const ChargeUtile = JSON.stringify(RecupLogin);
-    console.log(ChargeUtile);
 
-    // ENVOI A L'API
+    // Envoie à l'API
 
     
 
@@ -26,7 +25,7 @@ FormulaireLogin.addEventListener("submit", function (event) {
       body: ChargeUtile,
     })
 
-    // GESTION DU RETOUR DE L'API  
+    // Gestion du retour de l'API  
     
     .then((response) => {
       if (!response.ok) {
@@ -44,21 +43,14 @@ FormulaireLogin.addEventListener("submit", function (event) {
       window.location.href = "./index.html";
 
       return ResponseJson;
-      
     })
+
+    // Recupération du token de connection
+
     .then((data) => {
       console.log(data);
       window.localStorage.setItem("ConnectedToken", data.token);
       const TokenKey = window.localStorage.getItem("ConnectedToken");
-      console.log(TokenKey);
-      if (data.token === null){
-        
-      } else {
-        window.localStorage.setItem("ConnectedToken", data.token);
-        const TokenKey = window.localStorage.getItem("ConnectedToken");
-        console.log(TokenKey);
-        
-      }
-      
+      console.log(TokenKey);      
     })
 });
