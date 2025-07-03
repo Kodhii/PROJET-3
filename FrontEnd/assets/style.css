@@ -242,6 +242,11 @@ main {
 	border-radius: 60px;
 	background-color: #A7A7A7;
 	color: #FFFFFF;
+	border-style: none;
+}
+
+#ModalAdd input[type=submit]:hover {
+	background-color: #1D6154;
 }
 
 .styleAddImg p {
