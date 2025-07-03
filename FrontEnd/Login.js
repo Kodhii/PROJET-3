@@ -41,6 +41,7 @@ FormulaireLogin.addEventListener("submit", function (event) {
       
       const ResponseJson = response.json();
       console.log(ResponseJson);
+      window.location.href = "./index.html";
 
       return ResponseJson;
       
@@ -50,6 +51,14 @@ FormulaireLogin.addEventListener("submit", function (event) {
       window.localStorage.setItem("ConnectedToken", data.token);
       const TokenKey = window.localStorage.getItem("ConnectedToken");
       console.log(TokenKey);
-      window.location.href = "./index.html";
+      if (data.token === null){
+        
+      } else {
+        window.localStorage.setItem("ConnectedToken", data.token);
+        const TokenKey = window.localStorage.getItem("ConnectedToken");
+        console.log(TokenKey);
+        
+      }
+      
     })
 });

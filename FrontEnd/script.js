@@ -51,62 +51,15 @@ const NewCategory = {
   };
 Category.unshift(NewCategory);
 
+
 // fonction Générer les Travaux
-
-function genererTravaux(Works){
-    for (let i = 0; i < Works.length; i++) {
-
-        const article = Works[i];
-
-        const divGallery = document.querySelector(".gallery");
-
-        const figureGallery = document.createElement("figure");
-        // Déclaration de l'ID des éléments figure
-        figureGallery.setAttribute("categoryImgId", article.categoryId);
-
-        const imgWorks = document.createElement("img");
-        imgWorks.src = article.imageUrl;
-        imgWorks.alt = article.title;
-        
-
-        const imgCaption = document.createElement("figcaption");
-        imgCaption.innerText = article.title;
-
-
-
-        divGallery.appendChild(figureGallery);
-        figureGallery.appendChild(imgWorks);
-        figureGallery.appendChild(imgCaption);
-
-    }
-}
 
 genererTravaux(Works);
 
-// Fonction Generer boutons (boucle for)
-
-function genererBtn(Category){
-    console.log(Category);
-    for (let i =0; i < Category.length; i++){
-        const article = Category[i];
-
-        const DivBtn = document.querySelector(".BtnFilter");
-
-        const Btn = document.createElement("button");
-        Btn.innerText = article.name;
-        // Déclaration de l'ID de la category sélectionnée
-        Btn.setAttribute("category-id",Category[i].id);
-
-        Btn.classList.add("BtnClass");
-    
-
-        DivBtn.appendChild(Btn);
-        console.log(Btn);
-    }
-
-}
+// Fonction Generer boutons
 
 genererBtn(Category);
+
 
 // Récupération des boutons
 
@@ -136,4 +89,228 @@ DivBtn[i].addEventListener("click", function (event) {
     });
     
 });
+}
+
+
+
+// Déclaration de la modale
+let modal = document.querySelector("#modal1");
+
+
+// Ouverture/Fermeture modale
+
+const openModal = function (e) {
+    e.preventDefault();
+    const modalDisplay = document.querySelector(e.target.getAttribute("href"));
+    modalDisplay.style.display = "flex";
+    modalDisplay.removeAttribute("aria-hidden");
+    modalDisplay.setAttribute("aria-modal", "true");
+    modal = modalDisplay
+    modalDisplay.addEventListener("click", closeModal);
+    modalDisplay.querySelector(".closeModal").addEventListener("click", closeModal);
+
+
+    console.log(modalDisplay);
+
+
+    // Appel de la function genererTravauxModal
+    genererTravauxModal(Works);
+
+
+
+    // Envoie d'une requête de suppression du travail
+    const DeleteIcon = document.querySelectorAll(".IconDelete");
+    console.log(DeleteIcon);
+    for (let i=0; i < DeleteIcon.length; i++) {
+        DeleteIcon[i].addEventListener("click", function (e) {
+            e.preventDefault();
+            const RecupId = e.target.getAttribute("workid");
+            console.log(RecupId);
+
+            const RecupToken = window.localStorage.getItem("ConnectedToken");
+
+            console.log(RecupToken);
+            
+            fetch('http://localhost:5678/api/works/'+RecupId, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${RecupToken}`,
+                
+            }
+        
+            })
+
+        })
+    }  
+}
+
+// Fermeture de la modale
+
+const closeModal = function (e) {
+    
+    e.preventDefault();
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal = null
+    document.querySelector(".IconeWorks").innerHTML = "";
+}
+
+// Function empechant la fermeture de la modale en cliquant à l'interieur
+
+const modalWrappers = modal.querySelectorAll(".jsModalStop"); 
+modalWrappers.forEach(
+    wrapper => {
+         wrapper.addEventListener("click", function(e) { e.stopPropagation(); 
+
+        }); 
+    });
+
+
+// Ouverture de la modale d'ajout de travaux
+
+
+const openModal2 = document.querySelector("#AddWorks");
+   openModal2.addEventListener("click", function (e) {
+    e.preventDefault();
+    const modal1Hide = document.querySelector("#ModalDEL");
+    modal1Hide.style.display = "none";
+    modal1Hide.setAttribute("aria-hidden", "true");
+    modal1Hide.removeAttribute("aria-modal");
+    
+    
+
+    const modal2Display = document.querySelector("#ModalAdd");
+    modal2Display.style.display = "flex";
+    modal2Display.removeAttribute("aria-hidden");
+    modal2Display.setAttribute("aria-modal", "true");
+    modal2Display.querySelector(".closeModal").addEventListener("click", closeModal);
+
+
+    if (document.querySelector("#Category").options.length < 2) {
+        genererCat(Category);
+    }
+
+    
+    
+    document.getElementById("img").addEventListener('change', getImg);
+    
+
+
+
+    function sendForm(e) {
+    e.preventDefault();
+  
+    const form = e.target;
+    console.log(form);
+    const formData = new FormData(form);
+    
+
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${TokenKey}`,
+            'Content-Type': 'multipart/form-data'
+        },  
+        body: formData,
+
+        })
+  }
+  
+  const formAdd = document.getElementById("formAdd");
+  formAdd.addEventListener("submit", sendForm);
+
+
+
+
+
+
+
+    /*const form = document.forms.namedItem("formAdd");
+    form.addEventListener("submit",(event) => {
+
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        formData.append("CustomField", "Des données supplémentaires");
+
+
+        fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {'Content-Type': 'multipart/form-data'},
+        body: formData,
+        
+        });
+
+    })*/
+
+
+   })
+
+
+const Img = document.querySelector("#imgFile")
+
+function getImg(e){
+
+    const file = e.target.files[0];
+    let url = window.URL.createObjectURL(file);
+    Img.src = url
+
+    const DivAdd = document.querySelector(".styleAddImg");
+    DivAdd.style.display = "none";
+
+    const DivFilled = document.querySelector(".imgFilled");
+    DivFilled.style.display = "flex";
+
+
+   }
+
+
+const retourModal = document.querySelector("#retour");
+   retourModal.addEventListener("click", function (e){
+    e.preventDefault();
+    const modal2Display = document.querySelector("#ModalAdd");
+    modal2Display.style.display = "none";
+    modal2Display.setAttribute("aria-hidden", "true");
+    modal2Display.removeAttribute("aria-modal");
+
+    const modal1Hide = document.querySelector("#ModalDEL");
+    modal1Hide.style.display = "flex";
+    modal1Hide.removeAttribute("aria-hidden");
+    modal1Hide.setAttribute("aria-modal", "true");
+   })
+
+
+// Listener du click sur le boutons "modifier"
+
+document.querySelectorAll(".jsModal").forEach (a => {
+    a.addEventListener("click", openModal)
+});
+
+// Écoute de la touche échap du clavier afin de fermer la modale
+
+window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+        closeModal(e)
+    }
+});
+
+
+
+function genererCat(Category){
+    for (let i = 1; i < Category.length; i++){
+        
+        const article = Category[i];
+
+        const ParentCat = document.querySelector("#Category");
+
+        const option = document.createElement("option");
+        option.value = article.id;
+        option.innerText = article.name;
+
+        console.log(option);
+
+        ParentCat.appendChild(option);
+    }
+    
 }

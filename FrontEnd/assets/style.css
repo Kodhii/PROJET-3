@@ -55,6 +55,221 @@ body {
 	font-size: 14px;
 }
 
+main {
+	padding: 0px 30px;
+}
+
+* {box-sizing: border-box;}
+
+
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.ModalWrapper {
+	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 630px;
+	height: 688px;
+	border-radius: 10px;
+	padding: 40px;
+}
+
+#CroixCloseModal,
+#CroixCloseModal2 {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+#RetourCroix {
+	display: flex;
+	width: 600px;
+	padding: 0 20px;
+}
+
+
+.ModalWrapper a {
+	margin-bottom: 30px;
+	font-size: 80px;
+	font: inherit;
+	color: black;
+	text-decoration: none;
+}
+
+
+.ModalWrapper h1 {
+	margin-bottom: 50px;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	color: black;
+}
+
+.IconeWorks {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 420px;
+	height: 370px;
+	margin-bottom: 50px;
+	overflow: auto;
+}
+
+
+.DivWorks {
+	width: 78px;
+	height: 104px;
+}
+
+
+
+.IconeWorks .IconDelete {
+	width: 17px;
+	height: 17px;
+	float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+	border-radius: 2px;
+}
+
+#AddWorks {
+	width: 237px;
+	height: 36px;
+	border-radius: 60px;
+	background-color: #1D6154;
+	color: #FFFFFF;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 14px;
+	border-style: none;
+}
+
+#formAdd {
+	display: flex;
+	flex-direction: column;
+}
+
+#ModalAdd h2{
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	color: #000000;
+	margin-bottom: 40px;
+}
+
+.styleAddImg {
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	background-color: #E8F1F6;
+	margin-bottom: 40px;
+}
+
+.imgFilled {
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	background-color: #E8F1F6;
+	margin-bottom: 40px;
+}
+
+#imgFile {
+	width: 129px;
+	height: 169px;
+}
+
+
+#ModalAdd button {
+	display: flex;
+	position: relative;
+	width: 173px;
+	height: 36px;
+	border-radius: 50px;
+	background-color: #CBD6DC;
+	color: #306685;
+	border-style: none;
+	font-family: 'Work Sans';
+	font-weight: 500;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+#ModalAdd button p {
+	position: relative;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#ModalAdd input[type=file] {
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	opacity: 0.001;
+	cursor: pointer;
+}
+
+#ModalAdd input[type=submit] {
+	width: 237px;
+	height: 36px;
+	border-radius: 60px;
+	background-color: #A7A7A7;
+	color: #FFFFFF;
+}
+
+.styleAddImg p {
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 10px;	
+}
+
+#ModalAdd #title {
+	margin-top: 5px;
+	margin-bottom: 20px;
+	width: 420px;
+	height: 51px;
+	border-style: none;
+	box-shadow: 0px 4px 14px 0px #00000017;
+
+}
+
+#ModalAdd #Category {
+	margin-top: 5px;
+	margin-bottom: 20px;
+	width: 420px;
+	height: 51px;
+	border-style: none;
+	box-shadow: 0px 4px 14px 0px #00000017;
+
+}
+
 .Edition {
 	display: flex;
 	justify-content: center;
@@ -68,17 +283,17 @@ body {
 	display: flex;
 	height: 19px;
 	color: #FFFFFF;
-	font-family: 'Works Sans';
-	font-weight: 200;
-	font-size: 16px;
+	font-family: 'Works Sans' !important;
+	font-weight: lighter !important;
+	font-size: 16px !important;
 	gap: 6px;
-	text-decoration: thin;
-}
+} 
 
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	padding: 0px 30px;
 }
 header a{
 	text-decoration: none;
@@ -123,6 +338,10 @@ nav li {
 	font-size: 1.2em;
 }
 
+#insta {
+	width: 23px;
+}
+
 #Login {
 	display: none;
 }
@@ -145,7 +364,15 @@ li:hover {
 	display: flex;
 	align-items: center;
 	margin-bottom: 130px;
+	padding: 0px 30px;
 }
+
+#introduction p {
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 14px;
+}
+
 #introduction figure {
 	flex: 1
 }
@@ -165,6 +392,11 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+#portfolio {
+	padding: 0px 30px;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -174,12 +406,14 @@ li:hover {
 	display: flex;
 	margin-top: 40px;
 	justify-content: center;
-	gap: 25px;
+	gap: 30px;
 }
 
 .Modif{
 	display: flex;
 	gap: 10px;
+	height: 18px;
+	margin-top: 8px;
 }
 
 .Modif a{
@@ -204,6 +438,7 @@ li:hover {
 	font-family: "Syne";
 	font-size: 16px;
 	font-weight: 700;
+	border: 1px solid;
 }
 .BtnFilter button:focus {
 	background-color: #1D6154;

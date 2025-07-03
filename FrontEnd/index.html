@@ -12,6 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="config.js"></script>
 	<script type="module" src="script.js"></script>
 </head>
 <body>
@@ -28,18 +29,93 @@
 			<li><a href="index.html">projets</a></li>
 			<li><a href="#contact">contact</a></li>
 			<li id="Login"><a href="login.html">login</a></li>
-			<li><a id="Logout" href="#">Logout</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li><a id="Logout" href="#">logout</a></li>
+			<li><img id="insta" src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 	
 </header>
+
+
+<aside id="modal1" class="modal" role="dialog" aria-hidden="true" aria-labelledby="Galerie photo" style="display: none;">
+	
+	
+	
+	<div id="ModalDEL" class="ModalWrapper jsModalStop">
+		<div id="CroixCloseModal">
+		<a class="closeModal" href="#/"><img src="./assets/icons/Vector.png" alt="Fermer la modal"></a>
+		</div>
+		<br>
+		<h1>Galerie photo</h1>
+		<div class="IconeWorks">
+			
+		</div>
+
+		<button id="AddWorks"><a href="#ModalAdd"></a>Ajouter une photo</button>
+	</div>
+
+	<div id="ModalAdd" class="ModalWrapper jsModalStop" aria-hidden="true" aria-labelledby="Galerie photo" style="display: none;">
+
+		<div id="RetourCroix">
+
+			<div id="retour" class="jsModalStop">
+				<a href="#/"><img src="./assets/icons/retour.png" alt="Retour en arrière"></a>
+			</div>
+
+			<div id="CroixCloseModal2">
+				<a class="closeModal" href="#/"><img src="./assets/icons/Vector.png" alt="Fermer la modal"></a>
+			</div>
+
+
+		</div>
+
+		<h2>Ajout Photos</h2>
+
+		<form name="formAdd" id="formAdd" action="#" method="post" class="jsModalStop">
+			<div class="styleAddImg">
+				<img src="assets/icons/Paysage.png" alt="">
+				<br>
+				<label for="file" id="labelImg">
+					<button type="button">
+						<p>+ Ajouter photo</p>
+						<input type="file" id="img" name="img" accept="image/png, image/jpeg">
+					</button>
+				</label>
+				<br>
+				<p>jpg, png : 4mo max</p>
+
+			</div>
+
+			<div class="imgFilled" style="display: none;">
+				<img id="imgFile" alt="images travaux">
+			</div>
+			
+			<label for="title">Titre</label>
+			<br>
+			<input type="text" name="title" id="title">
+			<br>
+			<label for="Category">Catégories</label>
+			<br>
+			<select id="Category" name="Category" >
+				<option value=""></option>
+				
+			</select>
+			<br>
+			<input id="ValidWork" type="submit" value="Valider">
+
+		</form>
+		<div id="output"></div>
+	</div>
+</aside>
+
+
+
 <main>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
 		</figure>
-		<article>
+		<article class="Texte">
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
@@ -51,7 +127,7 @@
 			<h2>Mes Projets</h2>
 			<span class="Modif">
 			<i class="fa-regular fa-pen-to-square"></i>
-			<a href="#">modifier</a>
+			<a href="#modal1" class="jsModal">modifier</a>
 			</span>
 		</div>
 
