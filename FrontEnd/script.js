@@ -190,6 +190,8 @@ const openModal2 = document.querySelector("#AddWorks");
     
     
     document.getElementById("img").addEventListener('change', getImg);
+
+    
     
 // Appel de la fonction d'ajout
 
@@ -198,6 +200,25 @@ const openModal2 = document.querySelector("#AddWorks");
 
 
    })
+
+   // Affichage de l'image lors de la séléction d'ajout travaux
+
+const Img = document.querySelector("#imgFile")
+
+function getImg(e){
+
+    const file = e.target.files[0];
+    let url = window.URL.createObjectURL(file);
+    Img.src = url
+
+    const DivAdd = document.querySelector(".styleAddImg");
+    DivAdd.style.display = "none";
+
+    const DivFilled = document.querySelector(".imgFilled");
+    DivFilled.style.display = "flex";
+
+
+   }
 
 
 // Fonction ajout des travaux
@@ -249,24 +270,6 @@ function sendForm(e) {
   }
 
 
-// Affichage de l'image lors de la séléction d'ajout travaux
-
-const Img = document.querySelector("#imgFile")
-
-function getImg(e){
-
-    const file = e.target.files[0];
-    let url = window.URL.createObjectURL(file);
-    Img.src = url
-
-    const DivAdd = document.querySelector(".styleAddImg");
-    DivAdd.style.display = "none";
-
-    const DivFilled = document.querySelector(".imgFilled");
-    DivFilled.style.display = "flex";
-
-
-   }
 
 // Flèche de retour modale
 

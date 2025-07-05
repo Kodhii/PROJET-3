@@ -35,20 +35,19 @@ FormulaireLogin.addEventListener("submit", function (event) {
         Erreur.innerText = "Erreur dans l’identifiant ou le mot de passe";
         return false;
 
-      } 
+      } else {
       // Si le statut de la réponse est OK, Redirection vers la page d'accueil
       
       const ResponseJson = response.json();
-      console.log(ResponseJson);
       window.location.href = "./index.html";
 
       return ResponseJson;
+      }
     })
 
     // Recupération du token de connection
 
     .then((data) => {
-      console.log(data);
       window.localStorage.setItem("ConnectedToken", data.token);
       const TokenKey = window.localStorage.getItem("ConnectedToken");
       console.log(TokenKey);      
