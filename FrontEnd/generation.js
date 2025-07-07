@@ -88,19 +88,5 @@ function genererTravauxModal(Works){
 // Fonction générer category => génére les catégories dans la modale d'ajout de travaux
 
 
-function genererCat(Category){
-    for (let i = 1; i < Category.length; i++){
-        
-        const article = Category[i];
 
-        const ParentCat = document.querySelector("#Category");
-
-        const option = document.createElement("option");
-        option.value = article.id;
-        option.innerText = article.name;
-
-        ParentCat.appendChild(option);
-    }
-    
-}
 

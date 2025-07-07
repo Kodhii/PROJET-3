@@ -30,7 +30,7 @@ else {
 
 const LogoutBtn = document.querySelector("#Logout");
 LogoutBtn.addEventListener("click", function () {
-    window.localStorage.removeItem("ConnectedToken")
+    window.localStorage.removeItem("ConnectedToken");
     window.location.href = "./index.html";
 });
 
@@ -98,7 +98,7 @@ let modal = document.querySelector("#modal1");
 
 // Ouverture/Fermeture modale
 
-const openModal = function (e) {
+const openModal = async function (e) {
     e.preventDefault();
     const modalDisplay = document.querySelector(e.target.getAttribute("href"));
     modalDisplay.style.display = "flex";
@@ -107,11 +107,15 @@ const openModal = function (e) {
     modal = modalDisplay
     modalDisplay.addEventListener("click", closeModal);
     modalDisplay.querySelector(".closeModal").addEventListener("click", closeModal);
+    
 
 
 
     // Appel de la fonction genererTravauxModal
-    genererTravauxModal(Works);
+    const newWorksResponse = await fetch("http://localhost:5678/api/works");
+    const newWorks = await newWorksResponse.json();
+    document.querySelector(".IconeWorks").innerHTML="";
+    genererTravauxModal(newWorks);
 
 
 
@@ -131,18 +135,31 @@ const openModal = function (e) {
                 
             }        
             })
-            .then((data) => {
-            alert("Élément Supprimé avec succès");
-            window.location.href = "./index.html";
-            })
 
+
+            .then((response) => {
+                if(response.ok) {
+                    console.log("Élément Supprimé avec succès");
+                    return response.json;
+                } else {
+                    console.log("Erreur");
+                }
+            })
+            .then((data) => {
+                if(data == null){
+                    
+                } else {
+                    closeModal(e)  
+                }
+            })    
         })
+
     }  
 }
 
 // Fermeture de la modale
 
-const closeModal = function (e) {
+const closeModal = async function (e) {
     
     e.preventDefault();
     modal.style.display = "none";
@@ -150,6 +167,10 @@ const closeModal = function (e) {
     modal.removeAttribute("aria-modal");
     modal = null
     document.querySelector(".IconeWorks").innerHTML = "";
+    const newWorksResponse = await fetch("http://localhost:5678/api/works");
+    const newWorks = await newWorksResponse.json();
+    document.querySelector(".gallery").innerHTML="";
+    genererTravaux(newWorks);
 }
 
 // Fonction empechant la fermeture de la modale en cliquant à l'interieur
@@ -165,9 +186,7 @@ modalWrappers.forEach(
 
 // Ouverture de la modale d'ajout de travaux
 
-
-const openModal2 = document.querySelector("#AddWorks");
-   openModal2.addEventListener("click", function (e) {
+const openModal2 = function (e) {
     e.preventDefault();
     const modal1Hide = document.querySelector("#ModalDEL");
     modal1Hide.style.display = "none";
@@ -199,17 +218,21 @@ const openModal2 = document.querySelector("#AddWorks");
   formAdd.addEventListener("submit", sendForm);
 
 
-   })
+   }
 
-   // Affichage de l'image lors de la séléction d'ajout travaux
+// listener du click "Ajouter une photo"
 
-const Img = document.querySelector("#imgFile")
+const clickOpenModal2 = document.querySelector("#AddWorks");
+clickOpenModal2.addEventListener("click", openModal2);
+
+// Affichage de l'image lors de la séléction d'ajout travaux
 
 function getImg(e){
 
     const file = e.target.files[0];
+    const Img = document.querySelector("#imgFile");
     let url = window.URL.createObjectURL(file);
-    Img.src = url
+    Img.src = url;
 
     const DivAdd = document.querySelector(".styleAddImg");
     DivAdd.style.display = "none";
@@ -218,20 +241,19 @@ function getImg(e){
     DivFilled.style.display = "flex";
 
 
-   }
+}
 
 
 // Fonction ajout des travaux
 
-function sendForm(e) {
+async function sendForm(e) {
     e.preventDefault();
-
+ 
     // Recupération des valeurs du formulaire
 
     const img = document.getElementById("img").files[0];
     const title = document.getElementById("title").value;
     const cat = document.getElementById("Category");
-
     const categoryId = cat.options[cat.selectedIndex].value;
     
     const formData = new FormData;
@@ -239,15 +261,18 @@ function sendForm(e) {
     formData.append("title", title);
     formData.append("category", categoryId);
 
-    
+    console.log(img);
+    console.log(title);
+    console.log(categoryId);
     
     // Envoie à l'API
     
 
-    fetch('http://localhost:5678/api/works', {
+    await fetch('http://localhost:5678/api/works', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TokenKey}`,
+
         },  
         body: formData,
 
@@ -255,26 +280,48 @@ function sendForm(e) {
 
         // Traitement de la réponse
 
+        // Si réponse OK => retour console "Élement ajouté + titre"
         .then((response) => {
             if (response.ok) {
-            alert("Nouveau fichier envoyé avec succés : " + title);
+            console.log("Élement Ajouté : ", title);
             return response.json();
+                // Si réponse pas OK => retour console erreur
         } else {
             console.error("Erreur:", response.status);
         }
         })
+
+        // Si on récupère des données => fermeture et nettoyage de la modale
+
         .then((data) => {
-        console.log("Element ajouté : ", data);
-        window.location.href = "./index.html";
-        })
+                if(data == null){
+                    
+                } else {
+                    closeModal(e); 
+                }
+            })
+        .then(() => {
+            const img = document.getElementById("imgFile");
+            img.src = "assets/icons/Paysage.png";
+
+            const DivAdd = document.querySelector(".styleAddImg");
+            DivAdd.style.display = "flex";
+
+            const DivFilled = document.querySelector(".imgFilled");
+            DivFilled.style.display = "none";
+
+            retourModal(e);
+        
+            formAdd.reset();
+        })  
+        
   }
 
 
 
-// Flèche de retour modale
+// Fonction flèche de retour modale
 
-const retourModal = document.querySelector("#retour");
-   retourModal.addEventListener("click", function (e){
+const retourModal = function (e){
     e.preventDefault();
     const modal2Display = document.querySelector("#ModalAdd");
     modal2Display.style.display = "none";
@@ -285,8 +332,12 @@ const retourModal = document.querySelector("#retour");
     modal1Hide.style.display = "flex";
     modal1Hide.removeAttribute("aria-hidden");
     modal1Hide.setAttribute("aria-modal", "true");
-   })
+}
 
+//listener du click sur la flèche de retour
+
+const clickRetourModal = document.querySelector("#retour");
+clickRetourModal.addEventListener("click", retourModal);
 
 // Listener du click sur le boutons "modifier"
 
@@ -302,3 +353,20 @@ window.addEventListener("keydown", function (e) {
     }
 });
 
+// Fonction générant les catégorie du menu déroulant
+
+function genererCat(Category){
+    for (let i = 1; i < Category.length; i++){
+        
+        const article = Category[i];
+
+        const ParentCat = document.querySelector("#Category");
+
+        const option = document.createElement("option");
+        option.value = article.id;
+        option.innerText = article.name;
+
+        ParentCat.appendChild(option);
+    }
+    
+}

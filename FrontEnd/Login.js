@@ -39,7 +39,7 @@ FormulaireLogin.addEventListener("submit", function (event) {
       // Si le statut de la réponse est OK, Redirection vers la page d'accueil
       
       const ResponseJson = response.json();
-      window.location.href = "./index.html";
+
 
       return ResponseJson;
       }
@@ -48,8 +48,13 @@ FormulaireLogin.addEventListener("submit", function (event) {
     // Recupération du token de connection
 
     .then((data) => {
-      window.localStorage.setItem("ConnectedToken", data.token);
-      const TokenKey = window.localStorage.getItem("ConnectedToken");
-      console.log(TokenKey);      
+      if (data == false){
+        
+      } else {
+        window.localStorage.setItem("ConnectedToken", data.token);
+        const TokenKey = window.localStorage.getItem("ConnectedToken");
+        console.log(TokenKey);  
+        window.location.href = "./index.html";
+      }    
     })
 });
